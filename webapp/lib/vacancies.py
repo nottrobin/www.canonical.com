@@ -1,11 +1,9 @@
-CONTINENTS = {
-    (('AF'), ('Africa')),
-    # (('AN'), ('Antarctica')),
-    (('AS'), ('Asia')),
+GEOGRAPHIC_AREA = {
+    (('AME'), ('Africa and Middle East')),
+    (('Asia-Pac'), ('Asia Pacific')),
     (('EU'), ('Europe')),
+    (('Lat-Am'), ('Latin America')),
     (('NA'), ('North America')),
-    (('OC'), ('Oceania')),
-    (('SA'), ('South America')),
 }
 DISCIPLINE = {
     (('operations'), ('Operations')),
