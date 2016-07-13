@@ -4,9 +4,9 @@ from webapp.lib import vacancies
 
 
 class VacanciesFilterForm(forms.Form):
-    continents = forms.MultipleChoiceField(
+    geographic_area = forms.MultipleChoiceField(
         label='Geographical area',
-        choices=sorted(vacancies.CONTINENTS),
+        choices=sorted(vacancies.GEOGRAPHIC_AREA),
         widget=forms.CheckboxSelectMultiple(),
         required=False,
     )
