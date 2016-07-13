@@ -2,8 +2,11 @@
 Django views for www.canonical.com.
 """
 
+from django.shortcuts import render
+from django.views.generic.edit import FormView
 from django_template_finder_view import TemplateFinder
 
+from webapp.forms import VacanciesFilterForm
 
 class CanonicalTemplateFinder(TemplateFinder):
     """
@@ -26,3 +29,17 @@ class CanonicalTemplateFinder(TemplateFinder):
             context["level_" + str(index + 1)] = path
 
         return context
+
+
+class VacanciesFilterView(FormView):
+    form_class = VacanciesFilterForm
+    template_name = 'careers/vacancies.html'
+
+    def form_valid(self, form):
+        return render(
+            self.request, self.template_name, self.get_context_data()
+        )
+
+    def get(self, request, *args, **kwargs):
+        self.form = self.form_class(initial=request.GET)
+        return render(request, self.template_name, self.get_context_data())
