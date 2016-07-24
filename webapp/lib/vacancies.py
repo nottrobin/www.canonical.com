@@ -66,19 +66,19 @@ def get_vacancies(
     keywords=None,
     contract=None,
     department=None,
-    geographic_areas=list(),
+    geographic_area=list(),
     location=list(),
 ):
     # TODO: If file exists, load it up. Otherwise process feed.
 
     def _filter(v):
-        if title and title.lower() not in v.get('title').lower():
+        if title and title.lower() not in v.get('title', '').lower():
             return False
 
         if (
             keywords and
             any(
-                word.lower() not in v.get('summary').lower()
+                word.lower() not in v.get('summary', '').lower()
                 for word in keywords
             )
         ):
@@ -86,27 +86,27 @@ def get_vacancies(
 
         if (
             contract and
-            any(word not in v.get('contract') for word in contract)
+            any(word not in v.get('contract', '') for word in contract)
         ):
             return False
 
         if (
             department and
-            any(word not in v.get('department') for word in department)
+            any(word not in v.get('department', '') for word in department)
         ):
             return False
 
         if (
             location and
-            any(word not in v.get('location') for word in location)
+            any(word not in v.get('location', '') for word in location)
         ):
             return False
 
         if (
-            geographic_areas and
+            geographic_area and
             any(
-                word not in v.get('geographic_area')
-                for word in geographic_areas
+                word not in v.get('geographic_area', '')
+                for word in geographic_area
             )
         ):
             return False
