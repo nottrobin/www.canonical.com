@@ -72,12 +72,15 @@ def get_vacancies(
     # TODO: If file exists, load it up. Otherwise process feed.
 
     def _filter(v):
-        if title and title not in v.get('title'):
+        if title and title.lower() not in v.get('title').lower():
             return False
 
         if (
             keywords and
-            any(word not in v.get('summary') for word in keywords)
+            any(
+                word.lower() not in v.get('summary').lower()
+                for word in keywords
+            )
         ):
             return False
 
