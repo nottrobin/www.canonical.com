@@ -10,9 +10,9 @@ FEED_URL = (
 
 GEOGRAPHIC_AREA = {
     (('AME'), ('Africa and Middle East')),
-    (('Asia-Pac'), ('Asia Pacific')),
+    (('ASP'), ('Asia Pacific')),
     (('EU'), ('Europe')),
-    (('Lat-Am'), ('Latin America')),
+    (('LAM'), ('Latin America')),
     (('NA'), ('North America')),
 }
 DISCIPLINE = {
