@@ -3,10 +3,12 @@ Django views for www.canonical.com.
 """
 
 from django.shortcuts import render
-from django.views.generic.edit import FormView
+from django.views.generic.base import TemplateView
 from django_template_finder_view import TemplateFinder
 
 from webapp.forms import VacanciesFilterForm
+from webapp.lib.vacancies import get_vacancies
+
 
 class CanonicalTemplateFinder(TemplateFinder):
     """
@@ -31,15 +33,26 @@ class CanonicalTemplateFinder(TemplateFinder):
         return context
 
 
-class VacanciesFilterView(FormView):
+class VacanciesFilterView(TemplateView):
     form_class = VacanciesFilterForm
     template_name = 'careers/vacancies.html'
 
-    def form_valid(self, form):
-        return render(
-            self.request, self.template_name, self.get_context_data()
-        )
+    def get_context_data(self, **kwargs):
+        GET = self.request.GET
+        request_data = {
+            'title': GET.get('title'),
+            'keywords': GET.get('keywords'),
+            'geographic_area': GET.getlist('geographic_area'),
+            'location': GET.getlist('location'),
+            'contract': GET.getlist('contract'),
+            'department': GET.getlist('department'),
+        }
 
-    def get(self, request, *args, **kwargs):
-        self.form = self.form_class(initial=request.GET)
-        return render(request, self.template_name, self.get_context_data())
+        form = VacanciesFilterForm(initial=request_data)
+
+        vacancies = get_vacancies(**request_data)
+
+        context = super(VacanciesFilterView, self).get_context_data(**kwargs)
+        context['form'] = form
+        context['vacancies'] = vacancies
+        return context

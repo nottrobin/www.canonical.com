@@ -22,18 +22,18 @@ class VacanciesFilterForm(forms.Form):
         widget=forms.CheckboxSelectMultiple(),
         required=False,
     )
-    discipline = forms.MultipleChoiceField(
+    department = forms.MultipleChoiceField(
         label='Discipline',
         choices=sorted(vacancies.DISCIPLINE),
         widget=forms.CheckboxSelectMultiple(),
         required=False,
     )
-    job_title = forms.CharField(
+    title = forms.CharField(
         label='Job title',
         max_length=150,
         required=False,
     )
-    keyword = forms.CharField(
+    keywords = forms.CharField(
         label='Keyword',
         max_length=150,
         required=False,
