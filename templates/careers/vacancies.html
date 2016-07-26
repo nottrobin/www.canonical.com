@@ -3,26 +3,104 @@
 {% block title %}Canonical | Careers | All current vacancies{% endblock %}
 {% block meta_description %}If you’re interested in open source software, the cloud or mobile devices, Canonical is an incredible place to work. Whether you’re a technologist, a designer or a business professional, opportunities exist to work from home or at one of our key offices around the world.{% endblock %}
 {% block meta_keywords %}Canonical, Ubuntu, Linux, open source, free, software, design, designer, development, developer, programmer, engineer, UX, user, experience, interface, technology, IT, job, career, work, vacancy, vacancies, London, Taipei, Montreal, Boston, Shanghai, work from home, working from home, cloud, phone, smartphone, mobile{% endblock %}
-{% block head_extra %}
-	<script src="//www.google.com/jsapi"></script>
-	<script>google.load("feeds", "1");</script>
-{% endblock %}
 
 {% block content %}
-<div class="strip row">
-	<div class="inner-wrapper">
-		<div class="eight-col">
-			<p>
-				<a href="{% url 'vacancies' %}">Example vacancies link</a>
-			</p>
-			<p>
-	            <form action="" method="get">
-	                {{ form }}
-	                <input type="submit" value="Submit" />
-	            </form>
-			</p>
-		</div>
-	</div>
-</div>
+<section class="strip row row--hero">
+    <div class="inner-wrapper">
+        <div class="eight-col">
+            <h1>All current vacancies</h1>
+            <p class="intro">If you are interested in a role in a specific department or location, you can search jobs.</p>
+        </div>
+    </div>
+</section>
+
+<section class="strip row">
+    <div class="inner-wrapper">
+        <div class="twelve-col last-col">
+            <form action="" method="get" class="vacancy-filters">
+                <h3>Filter by</h3>
+                <div class="six-col">
+                    <fieldset>
+                        <h3>Geographic area</h3>
+                        {{ form.geographic_area.errors }}
+                        <label for="{{ form.geographic_area.id_for_label }}"></label>
+                        {{ form.geographic_area }}
+                    </fieldset>
+                    <fieldset>
+                        <h3>Location</h3>
+                        {{ form.location.errors }}
+                        <label for="{{ form.location.id_for_label }}"></label>
+                        {{ form.location }}
+                        <h3>Contract type</h3>
+                        {{ form.contract.errors }}
+                        <label for="{{ form.contract.id_for_label }}"></label>
+                        {{ form.contract }}
+                    </fieldset>
+                </div>
+                <div class="six-col last-col">
+                    <fieldset>
+                        <h3>Discipline</h3>
+                        {{ form.department.errors }}
+                        <label for="{{ form.department.id_for_label }}"></label>
+                        {{ form.department }}
+                    </fieldset>
+                    <fieldset>
+                        <h3>Job title</h3>
+                        {{ form.title.errors }}
+                        <label for="{{ form.title.id_for_label }}"></label>
+                        {{ form.title }}
+                    </fieldset>
+                    <fieldset>
+                        <h3>Keyword</h3>
+                        {{ form.keywords.errors }}
+                        <label for="{{ form.keywords.id_for_label }}"></label>
+                        {{ form.keywords }}
+                    </fieldset>
+                    <fieldset>
+                        <input type="submit" value="Filter vacancies" />
+                    </fieldset>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<section class="row">
+    <div class="inner-wrapper">
+        {% for vacancy in vacancies %}
+        <div class="vacancy eight-col last-col">
+            <dl class="vacancy__group four-col">
+                <dt class="vacancy__label">Geographic area</dt>
+                <dd class="vacancy__information">{{ vacancy.geographic_area }}</dd>
+                <dt class="vacancy__label">Discipline</dt>
+                <dd class="vacancy__information">{{ vacancy.discipline }}</dd>
+            </dl>
+            <dl class="vacancy__group four-col last-col">
+                <dt class="vacancy__label">Job title</dt>
+                <dd class="vacancy__information">{{ vacancy.title }}</dd>
+                <dt class="vacancy__label">Country</dt>
+                <dd class="vacancy__information">{{ vacancy.country_iso }}</dd>
+            </dl>
+            <dl class="vacancy__group">
+                <dt class="vacancy__label">Description</dt>
+                <dd class="vacancy__information vacancy__information--large"><!--{{ vacancy.html_description }}-->[Vacancy description will appear here. Lorem ipsum dolar sit amet.Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.] <a href="{{ vacancy.id }}">See more&nbsp;&rsaquo;</a></dd>
+            </dl>
+            <dl class="vacancy__group four-col">
+                <dt class="vacancy__label">Location</dt>
+                <dd class="vacancy__information">{{ vacancy.city }}</dd>
+                <dt class="vacancy__label">Date posted</dt>
+                <dd class="vacancy__information">{{ vacancy.published }}</dd>
+            </dl>
+            <dl class="vacancy__group four-col last-col">
+                <dt class="vacancy__label">Contract type</dt>
+                <dd class="vacancy__information">{{ vacancy.location_description }}</dd>
+            </dl>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- <p>
+    <a href="{% url 'vacancies' %}">Example vacancies link</a>
+</p> -->
 
 {% endblock content %}
