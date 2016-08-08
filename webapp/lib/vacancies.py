@@ -56,7 +56,7 @@ def save_vacancies_cache(vacancies):
         if not isdir(CACHE_FOLDER):
             raise
 
-    with open(CACHE_FILE, 'wb') as cache:
+    with open(CACHE_FILE, 'w') as cache:
         json.dump(vacancies, cache)
 
 
