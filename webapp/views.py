@@ -8,6 +8,7 @@ from django_template_finder_view import TemplateFinder
 
 from webapp.forms import VacanciesFilterForm
 from webapp.lib.vacancies import get_vacancies
+from webapp.lib.vacancies import get_vacancy_titles
 
 
 class CanonicalTemplateFinder(TemplateFinder):
@@ -51,8 +52,10 @@ class VacanciesFilterView(TemplateView):
         form = VacanciesFilterForm(initial=request_data)
 
         vacancies = get_vacancies(**request_data)
+        vacancy_titles = get_vacancy_titles()
 
         context = super(VacanciesFilterView, self).get_context_data(**kwargs)
         context['form'] = form
         context['vacancies'] = vacancies
+        context['vacancy'] = vacancy_titles
         return context
