@@ -1,4 +1,7 @@
 import feedparser
+import json
+from os import makedirs
+from os.path import isfile, isdir, join
 from requests_futures.sessions import FuturesSession
 
 
@@ -33,11 +36,32 @@ CONTRACTS = {
 
 
 # TODO: Warm up cache in deploy
+CACHE_FOLDER = '.cache'
+CACHE_FILE = join(CACHE_FOLDER, 'vacancies.json')
+
+
+def load_vacancies_cache():
+    if not isfile(CACHE_FILE):
+        return process_feed()
+
+    with open(CACHE_FILE) as cache:
+        vacancies = json.load(cache)
+    return vacancies
+
+
+def save_vacancies_cache(vacancies):
+    try:
+        makedirs(CACHE_FOLDER)
+    except OSError:
+        if not isdir(CACHE_FOLDER):
+            raise
+
+    with open(CACHE_FILE, 'w') as cache:
+        json.dump(vacancies, cache)
 
 
 def process_feed():
     # TODO: Rerun feed filtered on extra fields
-    # TODO: Save to file
 
     session = FuturesSession(max_workers=3)
     feed_request = session.get(FEED_URL)
@@ -50,13 +74,15 @@ def process_feed():
             'id': entry.id,
             'title': entry.title,
             'published': entry.published,
-            'summary': 'entry.summary',
-            'html_description': "entry.get('taleo_html-description')",
+            'summary': entry.summary,
+            'html_description': entry.get('taleo_html-description'),
             'department': entry.get('taleo_department'),
             'location_description': entry.get('taleo_location'),
             'city': entry.get('taleo_locationcity'),
             'country_iso': entry.get('taleo_locationcountry'),
         })
+
+    save_vacancies_cache(vacancies)
 
     return vacancies
 
@@ -113,6 +139,12 @@ def get_vacancies(
 
         return True
 
-    vacancies = process_feed()
-    vacancies = filter(_filter, vacancies)
+    vacancies_cache = load_vacancies_cache()
+    vacancies = filter(_filter, vacancies_cache)
     return vacancies
+
+
+def get_vacancy_titles():
+    vacancies = get_vacancies()
+    titles = (v.get('title', '') for v in vacancies)
+    return titles
