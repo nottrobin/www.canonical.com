@@ -568,29 +568,37 @@ html.yui3-js-enabled {
       display: block;
       padding: 20px 0;
     }
+    .tabbed-menu-wrapper {
+      float: none;
+    }
     .tabbed-content {
+      float: right;
+      display: none;
+      opacity: 0;
+
+      &:target, &:last-child {
         display: block;
-        margin-bottom: 20px;
-        padding: 40px;
         opacity: 1;
-        -webkit-animation: appear 0.5s ease-in;
-        animation: appear 0.5s ease-in;
+      }
+      &:target ~ .tabbed-content:last-child {
+        display: none;
+        opacity: 0;
+      }
 
-        &.hide {
-          display: none;
-          opacity: 0;
-        }
+      margin-bottom: 20px;
+      padding: 40px;
+      animation: appear 0.5s ease-in;
 
-        .title {
-          display: block;
-        }
+      .title {
+        display: block;
+      }
 
-        div {
-          display: block;
-        }
-        .vertical-divider div {
-          display: table-cell;
-        }
+      div {
+        display: block;
+      }
+      .vertical-divider div {
+        display: table-cell;
+      }
 
       .accordion-button {
         display: none;
@@ -906,10 +914,6 @@ html.no-svg {
       color: #666;
       display: block;
       margin-bottom: 20px;
-    }
-     a.active {
-      color: $cool_grey;
-      font-weight: 400;
     }
     li {
       text-align: left;

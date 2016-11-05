@@ -372,3 +372,14 @@ html.yes-js body.about-home {
 		}
 	}
 }
+
+// Make tabbed menu selection links appear selected
+#jane-silber:target ~ .tabbed-menu-wrapper [href='#jane-silber'],
+#mark-shuttleworth:target ~ .tabbed-menu-wrapper [href='#mark-shuttleworth'],
+#anand-krishnan:target ~ .tabbed-menu-wrapper [href='#anand-krishnan'],
+#robbie-williamson:target ~ .tabbed-menu-wrapper [href='#robbie-williamson'],
+#chris-kenyon:target ~ .tabbed-menu-wrapper [href='#chris-kenyon'],
+#neil-french:target ~ .tabbed-menu-wrapper [href='#neil-french'] {
+  color: $cool_grey;
+  font-weight: 400;
+}
